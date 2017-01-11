@@ -1,0 +1,31 @@
+<p>{{question.lead}}</p>
+<h2>{{question.content}}</h2>
+
+<div *ngIf="question.type === 'radio'">
+  <radio-input
+    [responses]="question.responses"
+    (valueChange)="onValueChange($event)">
+  </radio-input>
+</div>
+
+<div *ngIf="question.type === 'range'">
+  <range-input
+    [min]="question.range.min"
+    [max]="question.range.max"
+    (valueChange)="onValueChange($event)">
+  </range-input>
+</div>
+
+<div *ngIf="question.type === 'slider'">
+  <slider-input
+    [min]="question.range.min"
+    [max]="question.range.max"
+    [step]="question.range.step"
+    (valueChange)="onValueChange($event)">
+  </slider-input>
+</div>
+<div *ngIf="question.type === 'audio'">
+    <audio-input>
+    </audio-input>
+</div>
+

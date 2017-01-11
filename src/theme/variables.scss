@@ -1,0 +1,65 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+
+@import 'ionic.globals';
+
+// Main Map : map_get($colors, light)
+$colors: (
+  primary: #0b4a59,
+  secondary: #6d9aa5,
+  secondary-light: #9bb5bc,
+  danger: #f53d3d,
+  light: white,
+  dark: #222
+);
+
+// Main Colors // Shortcut
+$cl-primary: map_get($colors, primary);
+$cl-secondary: map_get($colors, secondary);
+$cl-secondary-light: map_get($colors, secondary-light);
+
+// Transparent Base
+$cl-primary-10: rgba(map_get($colors, primary), 0.1);
+$cl-primary-20: rgba(map_get($colors, primary), 0.2);
+$cl-primary-40: rgba(map_get($colors, primary), 0.4);
+$cl-primary-60: rgba(map_get($colors, primary), 0.6);
+$cl-primary-80: rgba(map_get($colors, primary), 0.8);
+
+// Transparent whites
+$cl-light: map_get($colors, light);
+$cl-light-10: rgba(map_get($colors, light), 0.1);
+$cl-light-20: rgba(map_get($colors, light), 0.2);
+$cl-light-40: rgba(map_get($colors, light), 0.4);
+$cl-light-60: rgba(map_get($colors, light), 0.6);
+$cl-light-80: rgba(map_get($colors, light), 0.8);
+
+// Font
+$cl-font: $cl-light;
+$cl-font-light: $cl-light-80;
+
+// App Globals
+$bt-height: 56px;
+$label-height: 40px;
+
+// Ionic Overrides
+$font-family-md-base: 'Montserrat', sans-serif;
+$text-color: $cl-font;
+$background-color: transparent;
+$button-md-text-transform: none;
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import 'ionic.theme.default';
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+$ionicons-font-path: '../assets/fonts';
+
+@import 'ionicons';

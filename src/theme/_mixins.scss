@@ -1,0 +1,43 @@
+// MIXINS
+@mixin font-body() {
+  color: $cl-font;
+  font-size: 16px;
+}
+
+@mixin font-body-strong() {
+  @include font-body;
+
+  font-weight: bold;
+}
+
+@mixin font-body-light() {
+  @include font-body;
+
+  color: $cl-font-light;
+}
+
+@mixin font-small() {
+  color: $cl-font-light;
+  font-size: 12px;
+}
+
+@mixin font-large() {
+  color: $cl-font;
+  font-size: 18px;
+  line-height: 1.35em;
+}
+
+@mixin font-title() {
+  color: $cl-font;
+  font-size: 20px;
+}
+
+@mixin button-round() {
+  @include font-large;
+
+  padding: 8px 32px;
+  height: $bt-height;
+  border: 2px solid white;
+  border-radius: $bt-height;
+  background-color: $cl-primary-20;
+}
