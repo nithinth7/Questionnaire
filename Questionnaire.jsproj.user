@@ -4,4 +4,7 @@
     <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
     <AndroidEmulatorID>AndroidDevice;Device</AndroidEmulatorID>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferenceCachePath>C:\Users\nithinth\AppData\Local\Temp\ghfp04ks_Questionnaire_refcache</ReferenceCachePath>
+  </PropertyGroup>
 </Project>

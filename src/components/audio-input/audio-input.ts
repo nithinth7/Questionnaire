@@ -18,5 +18,8 @@ export class AudioInputComponent {
     console.log('Hello AudioInput Component');
     this.text = 'Hello World';
   }
+  clicked() {
+      alert('Clicked');
+  }
 
 }
