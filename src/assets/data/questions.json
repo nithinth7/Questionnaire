@@ -4,11 +4,8 @@
     {
       "id": "PHQ8-0",
       "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
-      "content": "Mauris semper, velit facilisis sodales pulvinar, est mauris commodo risus, vitae aliquet lorem libero non nisi.",
-      "range": {
-        "min": 0, "max": 100, "step": 10
-      },
-      "type": "slider"
+      "content": "This is a test.",
+      "type": "audio"
     },
     {
       "id": "PHQ8-1",
@@ -112,11 +109,14 @@
       ],
       "type": "radio"
     },
-	  {
+    {
       "id": "PHQ8-10",
       "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
-      "content": "This is a test.",
-      "type": "audio"
+      "content": "Mauris semper, velit facilisis sodales pulvinar, est mauris commodo risus, vitae aliquet lorem libero non nisi.",
+      "range": {
+        "min": 0, "max": 100, "step": 10
+      },
+      "type": "slider"
     }
   ]
 }

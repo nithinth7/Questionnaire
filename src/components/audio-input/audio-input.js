@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import * as opensmile from 'G:/IonicProjects/RADAR-Questionnaire-master/plugins/plugin.opensmile/www/opensmile';
 /*
   Generated class for the AudioInput component.
 
@@ -18,7 +19,31 @@ var AudioInputComponent = (function () {
     function AudioInputComponent() {
         console.log('Hello AudioInput Component');
         this.text = 'Hello World';
+        this.fname = 'oepnsmile.csv';
+        this.fpath = 'opensmile';
     }
+    AudioInputComponent.prototype.success = function (message) {
+        alert(message);
+    };
+    AudioInputComponent.prototype.failure = function () {
+        alert("Error calling OpenSmile Plugin");
+    };
+    AudioInputComponent.prototype.delay = function (ms) {
+        return new Promise(function (resolve) { return setTimeout(resolve, ms); });
+    };
+    AudioInputComponent.prototype.start = function () {
+        /*cordova.plugins.backgroundMode.setDefaults({
+            title: 'My App Name',
+            text: 'Active in background...'
+        });
+        cordova.plugins.backgroundMode.enable();*/
+        opensmile.start(this.fname, this.fpath, this.success, this.failure);
+        alert('opensmile started');
+    };
+    AudioInputComponent.prototype.stop = function () {
+        cordova.plugins.opensmile.stop("Stop", this.success, this.failure);
+        alert('opensmile stoped');
+    };
     return AudioInputComponent;
 }());
 AudioInputComponent = __decorate([
