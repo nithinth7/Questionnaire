@@ -4,7 +4,11 @@
     {
       "id": "PHQ8-0",
       "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
-      "content": "This is a test.",
+      "content": "This is a test numer 1.",
+      "options": {
+        "configFile": "liveinput_android.conf",
+        "compressionLevel": 0
+      },
       "type": "audio"
     },
     {
@@ -24,18 +28,20 @@
       "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
       "content": "Nulla luctus sapien eu ligula bibendum, id vehicula nisi volutpat.",
       "range": {
-        "min": 1, "max": 5
+        "min": 1,
+        "max": 5
       },
       "type": "range"
     },
     {
       "id": "PHQ8-3",
       "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
-      "content": "Pellentesque hendrerit nulla a vestibulum tincidunt. Nulla gravida placerat vulputate.",
-      "range": {
-        "min": 1, "max": 10
+      "content": "This is a test number 2.",
+      "options": {
+        "configFile": "liveinput_android.conf",
+        "compressionLevel": 1
       },
-      "type": "range"
+      "type": "audio"
     },
     {
       "id": "PHQ8-4",
@@ -114,9 +120,32 @@
       "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
       "content": "Mauris semper, velit facilisis sodales pulvinar, est mauris commodo risus, vitae aliquet lorem libero non nisi.",
       "range": {
-        "min": 0, "max": 100, "step": 10
+        "min": 0,
+        "max": 100,
+        "step": 10
       },
       "type": "slider"
+    },
+    {
+      "id": "PHQ8-11",
+      "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
+      "content": "Pellentesque hendrerit nulla a vestibulum tincidunt. Nulla gravida placerat vulputate.",
+      "range": {
+        "min": 1,
+        "max": 10
+      },
+      "type": "range"
+    },
+    {
+      "id": "PHQ8-12",
+      "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
+      "content": "This is a test number 3.",
+      "options": {
+        "configFile": "liveinput_android.conf",
+        "compressionLevel": 0
+      },
+      "type": "audio"
     }
+    
   ]
 }

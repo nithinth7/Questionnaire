@@ -3,8 +3,14 @@
 
   See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
   for more info on Angular 2 Components.
+     [configFile] ="configFile"
+     [compressionLevel] ="compressionLevel">
 -->
-<div class="audio">
-    <button class="color" [class.check]='isRecording()' (click)='start();'>{{text}}</button>
-    <!--<button (click)='stop();'>Stop</button>-->
+<div class="audio" >  
+
+    <button class="button" [class.click]="isRecording()" 
+      (click)='start()'>
+    {{text}}
+    </button>
+
 </div>

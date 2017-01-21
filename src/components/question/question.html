@@ -25,7 +25,10 @@
   </slider-input>
 </div>
 <div *ngIf="question.type === 'audio'">
-    <audio-input>
+    <audio-input 
+      [configFile] ="question.options.configFile"
+      [compressionLevel] ="question.options.compressionLevel"
+      (click)="onValueChange($event)">
     </audio-input>
 </div>
 

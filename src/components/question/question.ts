@@ -25,6 +25,7 @@ export class QuestionComponent {
         break;
 
       case QuestionType.audio:
+            this.value = event;
         // TODO: add audio file reference to send
         break;
     }
