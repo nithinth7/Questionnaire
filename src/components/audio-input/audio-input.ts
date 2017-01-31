@@ -1,10 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MediaPlugin } from 'ionic-native';
 import * as cordova1 from 'cordova';
-import * as opensmile from 'G:/IonicProjects/RADAR-Questionnaire-master/plugins/plugin.opensmile/www/opensmile';
+import * as opensmile from 'G:/IonicProjects/RADAR-Questionnaire-master/plugins/plugin.opensmile/www/opensmile'; //file path to opensmile.js
 declare var cordova: any;
-//declare var navigator: any;
-let uniqueID: number = 0;
-
 /*
   Generated class for the AudioInput component.
 
@@ -15,77 +13,82 @@ let uniqueID: number = 0;
   selector: 'audio-input',
   templateUrl: 'audio-input.html'
 })
-export class AudioInputComponent implements OnInit{
-    @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-    @Input() configFile: string = "";
-    @Input() compressionLevel: number = 0;
-    text: string;
-    fname: string;
-    fpath: string;
-    recording: boolean;
-    value: string = null;
-    uniqueID: number = uniqueID++;
-    configfile: string;
-    compression: number;
+export class AudioInputComponent implements OnInit {
+  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() configFile: string = '';
+  @Input() compressionLevel: number = 0;
+  @Input() qid: string = '';
+  text: string;
+  fname: string;
+  name: string;
+  fpath: string;
+  recording: boolean;
+  value: string = null;
+  configfile: string;
+  compression: number;
+  media: MediaPlugin = null;
 
-    ngOnInit() {
-        this.configfile = this.configFile;
-        this.compression = this.compressionLevel;
-        alert(this.configFile + ":" + this.compressionLevel);
-    }
+  ngOnInit() { }
+
   constructor() {
     console.log('Hello AudioInput Component');
     this.text = 'Start Recording';
-    this.fname = 'opensmile' + uniqueID + '.csv';
     const fs: string = cordova.file.externalDataDirectory;
     var path: string = fs;
     path = path.substring(7, (path.length - 1))
     this.fpath = path;
-    this.value = this.fpath + "/" +this.fname;
     this.recording = false;
-    //alert(this.configFile + ":" + this.compressionLevel);
-    //var pname: string = cordova1.getActivity().getPackageName();
-    //this.fpath = '/Android/data/' + pname + '/ files';
-    //alert(pname);//+ ":fpath:" + this.fpath);
   }
 
-    success(message) {
-    alert(message);
-    }
+  startRecording(fullPath) {
+    this.media = new MediaPlugin(fullPath);
+    this.media.startRecord();
+  }
 
-    failure() {
-    alert("Error calling OpenSmile Plugin");
+  stopRecording() {
+    this.media.stopRecord();
+  }
+
+  success(message) { }
+
+  failure() {
+    alert('Error calling OpenSmile Plugin');
+  }
+
+  start() {
+    if (this.recording == false) {
+      var displayDate = new Date();
+      var date = displayDate.toISOString();
+      this.name = 'audio' + this.qid + '-' + date;
+      this.recording = true;
+      this.text = 'Stop Recording';
+      if (this.compressionLevel == 1) {
+        this.fname = this.name + '-opensmile.csv';
+        opensmile.start(this.fname, this.configFile, this.success, this.failure);
+      } else {
+        this.fname = this.name + '.mp3';
+        var fullPath = this.fpath + "/" + this.fname;
+        this.startRecording(fullPath);
+      }
+    } else if (this.recording == true) {
+      this.value = this.fpath + "/" + this.fname;
+      this.recording = false;
+      this.text = 'Start Recording';
+      if (this.compressionLevel == 1) {
+        opensmile.stop('Stop', this.success, this.failure);
+      } else {
+        this.stopRecording();
+      }
+      this.valueChange.emit(this.value);
     }
-    delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    start() {
-        if (this.recording == false) {
-            this.recording = true;
-            this.text = 'Stop Recording';
-            alert("Start" + this.configFile + ":" + this.compressionLevel + "config&compression" + this.configfile + ":" + this.compression);
-            if (this.compression == 1) {
-                opensmile.start(this.fname, this.configfile, this.success, this.failure);
-            } else {
-                alert('Audio recording started');
-            }
-        } else if (this.recording == true) {
-            //this.value = 1;
-            this.recording = false;
-            this.text = 'Start Recording';
-            if (this.compression == 1) {
-                opensmile.stop("Stop", this.success, this.failure);
-            } else {
-                alert('Audio recording stopped');
-            }
-            this.valueChange.emit(this.value);
-        }
-    }
-    isRecording() {
-        return this.recording;
-    }
-    stop() {
-        opensmile.stop("Stop", this.success, this.failure);
-        alert('opensmile stoped');
-    }
+  }
+
+  isRecording() {
+    return this.recording;
+  }
+
+  stop() {
+    opensmile.stop('Stop', this.success, this.failure);
+    alert('opensmile stoped');
+  }
 }

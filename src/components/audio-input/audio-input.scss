@@ -1,68 +1,28 @@
 @mixin my_button() {
-    @include font-large;
-    //padding: 8px 32px;
-    height: $bt-height;
-    border: 2px solid white;
-    border-radius: $bt-height;
-    //background-color: $color ;
-    position: relative;
-    display: flex;
-    flex-grow: 1;
-    text-align: center;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0px;
-    //height:50px;
-    width:100%;
-    margin: 0 auto;
-    //left: 50%;
-    margin-top:100%;
+  @include font-large;
+  height: $bt-height;
+  border: 2px solid white;
+  border-radius: $bt-height;
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-start;
+  width:100%;
+  margin: 0 auto;
+  margin-top:100%;
 }
 audio-input {
-    button {
-        //@include button-round;
-        @include my_button;
-        background-color: $cl-primary-20;
-        //text-align: center;
-        //padding: 0px;
-        /*position: relative;
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 0px;
-        text-align: center;
-        height:50px;
-        width:300px;
-        left: 50%;
-        margin-top:100%;*/
-    }
-    //&:hover {
-    //    background-color: $cl-secondary;
-    //}
-    button.click {
-        //background-color: red;
-        //@include button-round;
-        //@include my_button(red);
-        
-        background-color: red;
-        /*position: relative;
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-        justify-content: flex-start;
-        //padding: 14px 60px;
-        height:50px;
-        width:300px;
-        left: 50%;
-        margin-top:100%;*/
-        //padding: 0px;
-        //text-align: center;
-        //background : red;
-    }
-    audio
-    { 
-        text-align: center; 
-
-    }
+  button {
+    @include my_button;
+    background-color: $cl-primary-20;
+  }
+  button.click {
+    background-color: red;
+  }
+  audio
+  { 
+    text-align: center; 
+  }
 }
