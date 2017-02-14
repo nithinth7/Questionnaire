@@ -33,7 +33,10 @@ To add the Android platform. You need to have the [Android SDK](https://develope
 ```
 $ ionic platform add android
 ```
-
+Add plugin for opensmile:
+```
+$ ionic plugin add https://github.com/nithinth7/plugin-opensmile.git
+```
 Run the app in an Android device:
 ```
 $ ionic run android
