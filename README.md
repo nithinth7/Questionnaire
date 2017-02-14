@@ -33,10 +33,15 @@ To add the Android platform. You need to have the [Android SDK](https://develope
 ```
 $ ionic platform add android
 ```
-Add plugin for opensmile:
+Add plugin for opensmile(config branch):
 ```
 $ ionic plugin add https://github.com/nithinth7/plugin-opensmile.git
 ```
+You can also download config branch manually and add it from local system.
+```
+$ ionic plugin add <full path to plugin folder>
+```
+
 In build.gradle(Module: android), change java version to 1.7 ( sourceCompatibility JavaVersion.VERSION_1_7
 targetCompatibility JavaVersion.VERSION_1_7) 
 
