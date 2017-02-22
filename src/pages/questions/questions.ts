@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, Content, ViewController, App } from 'ionic-angular';
+import { Device } from 'ionic-native';
 
 import { Question } from '../../models/question';
 import { AnswerService } from '../../providers/answer-service';
@@ -33,7 +34,12 @@ export class QuestionsPage {
   previousBtTxt: string = this.txtValues.close;
   isNextBtDisabled: boolean = true;
   isPreviousBtVisible: boolean = false;
-
+  platform: boolean = false;
+  //firstPage: boolean = false;
+  answer = {
+      id: null,
+      value: null
+  }
   iconValues = {
     previous: 'ios-arrow-back',
     close: 'close-circle',
@@ -47,6 +53,13 @@ export class QuestionsPage {
     public appCtrl: App,
     private answerService: AnswerService
   ) {
+      if (Device.platform == 'Android') {
+          this.platform = true;
+          //alert("I'm an android device!");
+      } else {
+          //alert("Platform not android");
+          this.platform = false;
+      }
   }
 
   ionViewDidLoad() {
@@ -55,11 +68,39 @@ export class QuestionsPage {
     this.setCurrentQuestion();
   }
 
+  setEvent(id) {
+      this.answer.id = id;
+      this.answer.value = 'Platform not supported';
+  }
+
   setCurrentQuestion(value = 0) {
-    let min = !(this.currentQuestion + value < 0);
-    let max = !(this.currentQuestion + value >= this.questions.length);
-    let finish = (this.currentQuestion + value === this.questions.length);
-    let back = (this.currentQuestion + value === -1);
+      if (this.platform == false) {
+          while (this.questions[this.currentQuestion + value].type == 'audio') {
+              this.answer.id = this.questions[this.currentQuestion + value].id;
+              this.answer.value = 'Platform not supported';
+              //this.setEvent(this.questions[this.currentQuestion + value].id);
+              this.answerService.add(this.answer);
+              //this.answerService.add(this.setEvent(this.questions[this.currentQuestion + valueParam].id));
+              if (value <= -1) {
+                  value = value - 1;
+              } else {
+                  value = value + 1;
+              }
+              if (this.currentQuestion + value < 0)
+              {
+                  value = 0;
+              }
+              //alert("loop: valueParam: " + value);
+              if (this.currentQuestion + value == this.questions.length) {
+                  break;
+              }
+          }
+          //value = 2;
+      }
+    const min = !(this.currentQuestion + value < 0);
+    const max = !(this.currentQuestion + value >= this.questions.length);
+    const finish = (this.currentQuestion + value === this.questions.length);
+    const back = (this.currentQuestion + value === -1);
 
     if (min && max) {
       this.content.scrollToTop(200);
@@ -94,13 +135,13 @@ export class QuestionsPage {
   }
 
   setProgress() {
-    let tick = Math.ceil(100 / this.questions.length);
-    let percent = Math.ceil(this.currentQuestion * 100 / this.questions.length);
+    const tick = Math.ceil(100 / this.questions.length);
+    const percent = Math.ceil(this.currentQuestion * 100 / this.questions.length);
     this.progress = percent + tick;
   }
 
   checkAnswer() {
-    let id = this.questions[this.currentQuestion].id;
+    const id = this.questions[this.currentQuestion].id;
     return this.answerService.check(id);
   }
 

@@ -33,17 +33,6 @@ To add the Android platform. You need to have the [Android SDK](https://develope
 ```
 $ ionic platform add android
 ```
-Add plugin for opensmile(config branch):
-```
-$ ionic plugin add https://github.com/nithinth7/plugin-opensmile.git
-```
-You can also download config branch manually and add it from local system.
-```
-$ ionic plugin add <full path to plugin folder>
-```
-
-In build.gradle(Module: android), change java version to 1.7 ( sourceCompatibility JavaVersion.VERSION_1_7
-targetCompatibility JavaVersion.VERSION_1_7) 
 
 Run the app in an Android device:
 ```
@@ -53,4 +42,17 @@ $ ionic run android
 Run the app in an Android emulator:
 ```
 $ ionic emulate android
+```
+
+### Ionic State Reset
+
+Ionic CLI provides a simple command to reset and install the state set in `package.json`. 
+This command removes and reinstalls all platforms and plugins listed.
+```
+$ ionic state reset
+```
+
+You can also save the current state to `package.json`.
+```
+$ ionic state save
 ```

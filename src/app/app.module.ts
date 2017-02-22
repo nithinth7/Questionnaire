@@ -15,7 +15,7 @@ import { AudioInputComponent } from '../components/audio-input/audio-input';
 @NgModule({
   imports: [
     IonicModule.forRoot(MyApp, {
-      mode: "md"
+      mode: 'md'
     })
   ],
   declarations: [
@@ -31,7 +31,7 @@ import { AudioInputComponent } from '../components/audio-input/audio-input';
     RangeInputComponent,
     RadioInputComponent,
       SliderInputComponent,
-      AudioInputComponent,
+      AudioInputComponent
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,7 +47,7 @@ import { AudioInputComponent } from '../components/audio-input/audio-input';
     RangeInputComponent,
     RadioInputComponent,
       SliderInputComponent,
-      AudioInputComponent,
+      AudioInputComponent
   ],
   providers: [
     QuestionService,

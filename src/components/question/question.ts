@@ -14,8 +14,9 @@ export class QuestionComponent {
   value: number;
 
   onValueChange(event) {
-    // on init the component fires the event once
-    if (event === undefined) return;
+      // on init the component fires the event once
+      if (event === undefined) return;
+
 
     switch (this.question.type) {
       case QuestionType.radio:
@@ -26,6 +27,7 @@ export class QuestionComponent {
 
       case QuestionType.audio:
             this.value = event;
+        // TODO: add audio file reference to send
         break;
     }
 

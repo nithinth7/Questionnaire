@@ -16,7 +16,10 @@ export class FinishPage {
 
   ionViewDidLoad() {
     // TODO: Send data to server
-    console.log(this.answerService.answers);
+      for (let ans in this.answerService.answers) {
+          console.log(ans + ':' + this.answerService.answers[ans]);
+          alert('Answer:' + ans + ':' + this.answerService.answers[ans]);
+      }
   }
 
   handleClosePage() {
