@@ -1,7 +1,7 @@
 {
   "form": "PHQ8",
   "questions": [
-    {
+     {
       "id": "PHQ8-0",
       "lead": "How you feeling now?",
       "content": "\"Happiness is like a butterfly which, when pursued, is always beyond our grasp, but, if you will sit down quietly, may alight upon you\"",
@@ -21,26 +21,6 @@
         "step": 10
       },
       "type": "slider"
-    },
-    {
-      "id": "PHQ8-2",
-      "lead": "How you feeling now?",
-      "content": "\"Happiness is like a butterfly which, when pursued, is always beyond our grasp, but, if you will sit down quietly, may alight upon you\"",
-      "options": {
-        "configFile": "liveinput_android.conf",
-        "compressionLevel": 1
-      },
-      "type": "audio"
-    },
-    {
-      "id": "PHQ8-3",
-      "lead": "How you feeling now?",
-      "content": "\"Happiness is like a butterfly which, when pursued, is always beyond our grasp, but, if you will sit down quietly, may alight upon you\"",
-      "options": {
-        "configFile": "liveinput_android.conf",
-        "compressionLevel": 0
-      },
-      "type": "audio"
     },
     {
       "id": "PHQ8-4",
@@ -71,16 +51,8 @@
       "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
       "content": "Nulla luctus sapien eu ligula bibendum, id vehicula nisi volutpat.",
       "range": {
-        "min": 1, "max": 5
-      },
-      "type": "range"
-    },
-    {
-      "id": "PHQ8-6",
-      "lead": "Over the past two weeks, how often have you been bothered by any of the following problems?",
-      "content": "Pellentesque hendrerit nulla a vestibulum tincidunt. Nulla gravida placerat vulputate.",
-      "range": {
-        "min": 1, "max": 10
+        "min": 1,
+        "max": 5
       },
       "type": "range"
     },
@@ -91,16 +63,6 @@
       "options": {
         "configFile": "liveinput_android.conf",
         "compressionLevel": 1
-      },
-      "type": "audio"
-    },
-    {
-      "id": "PHQ8-8",
-      "lead": "How you feeling now?",
-      "content": "\"Happiness is like a butterfly which, when pursued, is always beyond our grasp, but, if you will sit down quietly, may alight upon you\"",
-      "options": {
-        "configFile": "liveinput_android.conf",
-        "compressionLevel": 0
       },
       "type": "audio"
     }

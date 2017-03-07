@@ -6,6 +6,8 @@ import { Question } from '../../models/question';
 import { AnswerService } from '../../providers/answer-service';
 import { FinishPage } from '../finish/finish';
 
+declare var cordova: any;
+
 @Component({
   selector: 'page-questions',
   templateUrl: 'questions.html'
@@ -35,7 +37,9 @@ export class QuestionsPage {
   isNextBtDisabled: boolean = true;
   isPreviousBtVisible: boolean = false;
   platform: boolean = false;
-  //firstPage: boolean = false;
+  permission: boolean = false;
+  audio: boolean = false;
+  permissions = null;
   answer = {
       id: null,
       value: null
@@ -53,34 +57,65 @@ export class QuestionsPage {
     public appCtrl: App,
     private answerService: AnswerService
   ) {
-      if (Device.platform == 'Android') {
-          this.platform = true;
-          //alert("I'm an android device!");
-      } else {
-          //alert("Platform not android");
-          this.platform = false;
-      }
   }
 
   ionViewDidLoad() {
     this.questions = this.navParams.data;
     this.questionsContainerEl = this.questionsContainerRef.nativeElement;
+    var i = 0;
+    while (i < this.questions.length) {
+        if (this.questions[i].type == 'audio') {
+            this.audio = true;
+            break;
+        }
+        i = i + 1;
+    }
+    if (Device.platform == 'Android') {
+        this.permissions = cordova.plugins.permissions;
+        this.platform = true;
+        if (this.audio == true) {
+            this.checkPermission();
+        }
+    } else {
+        this.platform = false;
+    }
     this.setCurrentQuestion();
   }
-
-  setEvent(id) {
-      this.answer.id = id;
-      this.answer.value = 'Platform not supported';
+  checkPermission() {
+      this.permissions.hasPermission(this.permissions.RECORD_AUDIO,
+          (status) => {
+              if (!status.hasPermission) {
+                  //alert('no permission');
+                  var errorCallback = function () {
+                      //alert('audio permission is not turned on');
+                  }
+                  this.permissions.requestPermission(
+                      this.permissions.RECORD_AUDIO,
+                      (status) => {
+                          if (!status.hasPermission) {
+                              errorCallback();
+                          } else {
+                              this.permission = true;
+                              //alert('Permission granted - requestpermission:' + this.permission)
+                          }
+                      },
+                      errorCallback);
+              } else {
+                  this.permission = true;
+              }
+              //alert('value:' + value)
+          },
+          null);
   }
-
   setCurrentQuestion(value = 0) {
+      //alert('Permission:' + this.permission);
+      var qnno: number = this.currentQuestion + value;
+
       if (this.platform == false) {
           while (this.questions[this.currentQuestion + value].type == 'audio') {
               this.answer.id = this.questions[this.currentQuestion + value].id;
               this.answer.value = 'Platform not supported';
-              //this.setEvent(this.questions[this.currentQuestion + value].id);
               this.answerService.add(this.answer);
-              //this.answerService.add(this.setEvent(this.questions[this.currentQuestion + valueParam].id));
               if (value <= -1) {
                   value = value - 1;
               } else {
@@ -90,17 +125,16 @@ export class QuestionsPage {
               {
                   value = 0;
               }
-              //alert("loop: valueParam: " + value);
               if (this.currentQuestion + value == this.questions.length) {
                   break;
               }
           }
-          //value = 2;
-      }
+      } 
     const min = !(this.currentQuestion + value < 0);
     const max = !(this.currentQuestion + value >= this.questions.length);
     const finish = (this.currentQuestion + value === this.questions.length);
     const back = (this.currentQuestion + value === -1);
+    
 
     if (min && max) {
       this.content.scrollToTop(200);
@@ -139,14 +173,17 @@ export class QuestionsPage {
     const percent = Math.ceil(this.currentQuestion * 100 / this.questions.length);
     this.progress = percent + tick;
   }
-
+  getPermission() {
+      return this.permission;
+  }
   checkAnswer() {
     const id = this.questions[this.currentQuestion].id;
     return this.answerService.check(id);
   }
 
   setNextDisabled() {
-    this.isNextBtDisabled = !this.checkAnswer();
+      this.isNextBtDisabled = !this.checkAnswer();
+      //alert('nxtDis:'+this.isNextBtDisabled);
   }
 
   nextQuestion() {

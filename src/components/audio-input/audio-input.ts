@@ -2,9 +2,11 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MediaPlugin, Device } from 'ionic-native';
 import * as cordova1 from 'cordova';
 import * as opensmile from '../../../plugins/plugin.opensmile/www/opensmile'; //file path to opensmile.js
-//import { AnswerService } from '../../providers/answer-service'
-import { Answer } from '../../models/answer';
+import { AnswerService } from '../../providers/answer-service'
+//import { Answer } from '../../models/answer';
+import { QuestionsPage } from '../../pages/questions/questions';
 declare var cordova: any;
+declare var window: any;
 /*
   Generated class for the AudioInput component.
 
@@ -30,17 +32,30 @@ export class AudioInputComponent implements OnInit {
     compression: number;
     media: MediaPlugin = null;
     platform: boolean = false;
+    answer_b64: string = null;
+    //questions: QuestionsPage;
+    permission: boolean = false;
+    //permissions = cordova.plugins.permissions;
     //ans: Answer = null;
     //answerService: AnswerService;
     answer = {
         id: null,
         value: null
     }
-    ngOnInit() { }
-
-    constructor() {
+    ngOnInit() {
+        //alert('qid:' + this.qid);
         if (Device.platform == 'Android') {
-            console.log('Hello AudioInput Component');
+            if (!this.answerService.check(this.qid)) {
+                this.answer.id = this.qid;
+                this.answer.value = 'Not Recorded yet';
+                this.answerService.add(this.answer);
+            }
+        }
+    }
+
+    constructor(public questions: QuestionsPage,
+        private answerService: AnswerService) {
+        if (Device.platform == 'Android') {
             this.text = 'Start Recording';
             const fs: string = cordova.file.externalDataDirectory;
             var path: string = fs;
@@ -49,9 +64,9 @@ export class AudioInputComponent implements OnInit {
             this.recording = false;
             this.platform = true;
         } else {
+
         }
     }
-
     startRecording(fullPath) {
         this.media = new MediaPlugin(fullPath);
         this.media.startRecord();
@@ -61,14 +76,18 @@ export class AudioInputComponent implements OnInit {
         this.media.stopRecord();
     }
 
-    success(message) { }
+    success(message) {
+        //alert('Message:' + message);
+    }
 
     failure() {
         alert('Error calling OpenSmile Plugin');
     }
 
     start() {
-        if (this.platform) {
+        this.permission = this.questions.getPermission();
+        //alert('Audio-input Permission:' + this.permission);
+        if (this.platform && this.permission == true) {
             if (this.recording == false) {
                 var displayDate = new Date();
                 var date = displayDate.toISOString();
@@ -89,17 +108,38 @@ export class AudioInputComponent implements OnInit {
                 this.text = 'Start Recording';
                 if (this.compressionLevel == 1) {
                     opensmile.stop('Stop', this.success, this.failure);
+                    this.readFile(this.fpath, 'test50.bin');
+                    //this.valueChange.emit(this.answer_b64);
                 } else {
                     this.stopRecording();
+                    this.valueChange.emit(this.value);
                 }
-                //this.ans.id = this.qid;
-                //this.ans.value = this.value;
-                //this.answerService.add(this.answer);
-                this.valueChange.emit(this.value);
             }
+        } else {
+            this.value = 'Permission not granted';
+            this.valueChange.emit(this.value);
+            alert('Permission not granted; Go to next question');
         }
     }
+    readFile(file_path, file_name) {
+        var ans_b64 = null;
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory + '/' + file_name, (fileEntry) => {
+                fileEntry.file( (file) => {
+                    var reader = new FileReader();
 
+                    reader.onloadend = (e: any) => {
+                        ans_b64 = e.target.result;
+                        this.answer_b64 = e.target.result;
+                        this.valueChange.emit(this.answer_b64);
+                    };
+                    reader.readAsDataURL(file);
+                }, errorCallback);
+
+        }, errorCallback);
+        function errorCallback(error) {
+            alert("ERROR: " + error.code)
+        }
+}
     isRecording() {
         return this.recording;
     }
