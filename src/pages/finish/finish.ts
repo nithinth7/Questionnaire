@@ -28,7 +28,7 @@ export class FinishPage {
           this.answers += '\n';
           //alert('Answer:' + ans + ':' + this.answerService.answers[ans]);
       }
-      alert('this.answers:' + this.answers);
+      //alert('this.answers:' + this.answers);
       this.writeFile('answers.txt', this.answers);
   }
   writeFile(fileName, data) {

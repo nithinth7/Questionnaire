@@ -91,6 +91,9 @@ export class AudioInputComponent implements OnInit {
             if (this.recording == false) {
                 var displayDate = new Date();
                 var date = displayDate.toISOString();
+                date = date.replace(/\./g, '-');
+                date = date.replace(/\:/g, '-');
+                alert('Date:' + date);
                 this.name = 'audio' + this.qid + '-' + date;
                 this.recording = true;
                 this.text = 'Stop Recording';
@@ -108,11 +111,12 @@ export class AudioInputComponent implements OnInit {
                 this.text = 'Start Recording';
                 if (this.compressionLevel == 1) {
                     opensmile.stop('Stop', this.success, this.failure);
-                    this.readFile(this.fpath, 'test50.bin');
+                    this.readFile('test50.bin');
                     //this.valueChange.emit(this.answer_b64);
                 } else {
                     this.stopRecording();
-                    this.valueChange.emit(this.value);
+                    this.readFile(this.fname);
+                    //this.valueChange.emit(this.value);
                 }
             }
         } else {
@@ -121,12 +125,13 @@ export class AudioInputComponent implements OnInit {
             alert('Permission not granted; Go to next question');
         }
     }
-    readFile(file_path, file_name) {
+    readFile(file_name) {
         var ans_b64 = null;
+        alert('File name: ' + file_name);
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory + '/' + file_name, (fileEntry) => {
+            alert('File name: ' + file_name);
                 fileEntry.file( (file) => {
                     var reader = new FileReader();
-
                     reader.onloadend = (e: any) => {
                         ans_b64 = e.target.result;
                         this.answer_b64 = e.target.result;
